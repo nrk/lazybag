@@ -12,7 +12,7 @@ end
 
 -- defines a 'iamlazy' field whose value is initialized upon first access
 container:lazy('iamlazy', function(t)
-	print('You will see me only once!')
+    print('You will see me only once!')
     return t:fn(unpack(t.metavars))
 end)
 
