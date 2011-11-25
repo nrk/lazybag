@@ -4,10 +4,11 @@ end
 
 local mt_index = function(t, key)
     local mt = getmetatable(t)
-    if mt.generators[key] then
-        mt.storage[key], mt.generators[key] = mt.generators[key](t, key), nil
+    local storage, generators = mt.storage, mt.generators
+    if storage[key] == nil and generators[key] ~= nil then
+        storage[key], generators[key] = generators[key](t, key), nil
     end
-    return mt.storage[key]
+    return storage[key]
 end
 
 local fn_lazy = function(t, key, fn)
@@ -24,9 +25,9 @@ end
 
 local fn_rename = function(t, old, new)
     local generators = getmetatable(t).generators
-    if generators[old] then
+    if generators[old] ~= nil then
         generators[new], generators[old] = generators[old], nil
-    elseif t[old] then
+    elseif t[old] ~= nil then
         t[new], t[old] = t[old], nil
     end
 end
