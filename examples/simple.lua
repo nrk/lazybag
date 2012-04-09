@@ -1,4 +1,4 @@
-package.path = 'lib/?.lua;../lib/?.lua;' .. package.path
+package.path = 'src/?.lua;../src/?.lua;' .. package.path
 
 local container = require('lazybag').new()
 
