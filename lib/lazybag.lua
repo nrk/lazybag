@@ -1,3 +1,7 @@
+local _VERSION     = 'lazybag v1.0.0'
+local _DESCRIPTION = 'Plain Lua tables with lazily-initialized field values.'
+local _COPYRIGHT   = 'Copyright (C) 2011-2012 Daniele Alessandri'
+
 local mt_newindex = function(t, key, value)
     getmetatable(t).storage[key] = value
 end
