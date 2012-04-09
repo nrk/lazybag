@@ -12,7 +12,7 @@ local mt_index = function(t, key)
 end
 
 local fn_lazy = function(t, key, fn)
-    if not type(fn) == 'function' then
+    if type(fn) ~= 'function' then
         error('Function expected')
     end
     getmetatable(t).generators[key] = fn
