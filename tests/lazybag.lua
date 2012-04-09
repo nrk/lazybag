@@ -14,6 +14,19 @@ context('Lazybag', function()
         assert_not_equal(container1, container2)
     end)
 
+    test('initializes new table objects from an existing table', function()
+        local tbl = { one = 1, two = 2 }
+        local container = lazybag.new(tbl)
+
+        assert_equal(container.one, 1)
+        assert_equal(container.two, 2)
+
+        assert_error(function()
+            -- cannot initialize a container with the module table
+            lazybag.new(lazybag)
+        end)
+    end)
+
     test('accepts only functions for lazy fields generators', function()
         local container = lazybag.new()
 

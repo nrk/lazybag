@@ -2,6 +2,8 @@ local _VERSION     = 'lazybag v1.0.0'
 local _DESCRIPTION = 'Plain Lua tables with lazily-initialized field values.'
 local _COPYRIGHT   = 'Copyright (C) 2011-2012 Daniele Alessandri'
 
+local lazybag = {}
+
 local mt_newindex = function(t, key, value)
     getmetatable(t).storage[key] = value
 end
@@ -41,22 +43,34 @@ local fn_getraw = function(t, key)
     return mt.generators[key] or mt.storage[key]
 end
 
-local lazybag = {
-    new = function()
-        local t = {
-            lazy = fn_lazy,
-            islazy = fn_islazy,
-            rename = fn_rename,
-            getraw = fn_getraw,
-        }
-        local mt = {
-            generators = {},
-            storage = {},
-            __index = mt_index,
-            __newindex = mt_newindex,
-        }
-        return setmetatable(t, mt)
-    end,
-}
+lazybag.new = function(other)
+    if other == lazybag then
+        error('Cannot initialize a lazybag container with lazybag itself')
+    end
+
+    local t = {
+        lazy = fn_lazy,
+        islazy = fn_islazy,
+        rename = fn_rename,
+        getraw = fn_getraw,
+    }
+
+    if other ~= nil then
+        for k, v in pairs(other) do
+            if t[k] == nil then
+                t[k] = v
+            end
+        end
+    end
+
+    local mt = {
+        generators = {},
+        storage = {},
+        __index = mt_index,
+        __newindex = mt_newindex,
+    }
+
+    return setmetatable(t, mt)
+end
 
 return lazybag
