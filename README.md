@@ -5,6 +5,10 @@ Lazybag is a tiny Lua library loosely inspired by [Pimple](http://github.com/fab
 can be leveraged to create table objects with fields that are lazily initialized upon first access
 using functions that act as value initializers.
 
+## Compatibility ##
+
+This library is tested and works with __Lua 5.1__, __Lua 5.2__ and __LuaJit 2.0__.
+
 ## Example ##
 
 ```lua
@@ -33,6 +37,11 @@ Foo is foo and bar is bar.
 Foo is foo and bar is bar.
 ]]
 ```
+
+## Tests ##
+
+Lazybag uses [Telescope](http://telescope.luaforge.net) for its tests. You can launch the whole test
+suite from the root of the repository with `tsc -f tests/lazybag.lua`.
 
 ## Author ##
 
